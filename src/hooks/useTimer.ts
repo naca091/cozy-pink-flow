@@ -27,11 +27,38 @@ export const useTimer = () => {
 
   const startSessionMutation = useMutation({
     mutationFn: async ({ type, duration }: { type: string; duration: number }) => {
+      // Get current authenticated user
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // If no authenticated session, throw an error or handle accordingly
+      if (!session?.user) {
+        console.error("No authenticated user found");
+        // For now, using a placeholder user ID for demo purposes
+        // In a real app, you would want to handle this differently (e.g., prompt login)
+        const demoUserId = '00000000-0000-0000-0000-000000000000';
+        
+        const { data, error } = await supabase
+          .from('pomodoro_sessions')
+          .insert({
+            type,
+            duration,
+            user_id: demoUserId // Using the demo user ID
+          })
+          .select()
+          .single();
+        
+        if (error) throw error;
+        return data;
+      }
+      
+      // With authenticated user, proceed normally
       const { data, error } = await supabase
         .from('pomodoro_sessions')
-        .insert([
-          { type, duration }
-        ])
+        .insert({
+          type,
+          duration,
+          user_id: session.user.id
+        })
         .select()
         .single();
       
