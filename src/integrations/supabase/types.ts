@@ -9,7 +9,78 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      pomodoro_sessions: {
+        Row: {
+          completed: boolean
+          created_at: string
+          duration: number
+          end_time: string | null
+          id: string
+          start_time: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          duration: number
+          end_time?: string | null
+          id?: string
+          start_time?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          duration?: number
+          end_time?: string | null
+          id?: string
+          start_time?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          auto_start_breaks: boolean
+          auto_start_pomodoro: boolean
+          created_at: string
+          focus_duration: number
+          id: string
+          long_break_duration: number
+          long_break_interval: number
+          short_break_duration: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auto_start_breaks?: boolean
+          auto_start_pomodoro?: boolean
+          created_at?: string
+          focus_duration?: number
+          id?: string
+          long_break_duration?: number
+          long_break_interval?: number
+          short_break_duration?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auto_start_breaks?: boolean
+          auto_start_pomodoro?: boolean
+          created_at?: string
+          focus_duration?: number
+          id?: string
+          long_break_duration?: number
+          long_break_interval?: number
+          short_break_duration?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
